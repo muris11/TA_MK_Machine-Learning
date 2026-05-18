@@ -1,0 +1,40 @@
+{
+  "created_at": "2026-05-18 12:01:23",
+  "input": {
+    "tahun": 2029,
+    "gini_ratio": 400,
+    "tingkat_penganggur_terbuka": 5,
+    "rata_rata_inflasi_tahunan": 0.15,
+    "indeks_pembangunan_manusia": 73.5
+  },
+  "output": {
+    "prediksi_kemiskinan": 7.4,
+    "priority_level": "Low Priority",
+    "status": "Risiko rendah",
+    "rekomendasi_utama": "Pertahankan program sosial yang sudah berjalan dan lakukan monitoring berkala.",
+    "alasan": [
+      "Prediksi kemiskinan berada pada kategori risiko rendah berdasarkan distribusi historis data.",
+      "Intervensi tetap diperlukan agar kondisi sosial ekonomi tetap stabil."
+    ],
+    "aksi_kebijakan": [
+      "Monitoring indikator kemiskinan setiap semester",
+      "Mempertahankan program bantuan sosial yang sudah berjalan",
+      "Mendorong pemberdayaan ekonomi lokal",
+      "Meningkatkan literasi keuangan dan akses UMKM"
+    ],
+    "timeline": {
+      "0-3 bulan": [
+        "Evaluasi data kemiskinan dan indikator ekonomi terbaru",
+        "Identifikasi kelompok rentan yang tetap perlu dipantau"
+      ],
+      "3-12 bulan": [
+        "Penguatan program ekonomi produktif",
+        "Monitoring efektivitas bantuan sosial"
+      ],
+      "1-3 tahun": [
+        "Peningkatan kualitas SDM dan stabilitas ekonomi daerah",
+        "Penguatan daya saing ekonomi lokal"
+      ]
+    }
+  }
+}

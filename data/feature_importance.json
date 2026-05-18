@@ -1,0 +1,32 @@
+[
+  {
+    "feature": "indeks_pembangunan_manusia",
+    "label": "Indeks Pembangunan Manusia",
+    "importance": 0.39,
+    "direction": "Peningkatan IPM menurunkan risiko kemiskinan"
+  },
+  {
+    "feature": "tingkat_penganggur_terbuka",
+    "label": "Tingkat Pengangguran Terbuka",
+    "importance": 0.27,
+    "direction": "Kenaikan TPT menaikkan risiko kemiskinan"
+  },
+  {
+    "feature": "gini_ratio",
+    "label": "Gini Ratio",
+    "importance": 0.21,
+    "direction": "Ketimpangan tinggi menaikkan risiko"
+  },
+  {
+    "feature": "rata_rata_inflasi_tahunan",
+    "label": "Rata-rata Inflasi Tahunan",
+    "importance": 0.08,
+    "direction": "Inflasi tinggi menekan daya beli"
+  },
+  {
+    "feature": "tahun",
+    "label": "Tahun Prediksi",
+    "importance": 0.05,
+    "direction": "Semakin jauh horizon, semakin besar kehati-hatian"
+  }
+]

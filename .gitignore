@@ -1,0 +1,29 @@
+# dependencies
+node_modules
+
+# next
+.next
+out
+
+# production
+dist
+build
+
+# env
+.env
+.env.local
+.env.*.local
+
+# misc
+.DS_Store
+*.pem
+*.log
+
+# testing
+coverage
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo

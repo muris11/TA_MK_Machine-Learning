@@ -1,0 +1,29 @@
+{
+    "project_title": "Prediksi Kondisi Sosial Provinsi Jawa Barat",
+    "model_type": "Supervised Learning",
+    "tasks": {
+        "regression": "Prediksi persentase kemiskinan",
+        "classification": "Klasifikasi prioritas intervensi sosial"
+    },
+    "best_models": {
+        "regression": "RandomForestRegressor",
+        "classification": "RandomForestClassifier"
+    },
+    "metrics": {
+        "r2_score": 0.9836554026438189,
+        "mae": 0.0041419141914586345,
+        "classification_accuracy": 0.9933993399339934
+    },
+    "feature_columns": [
+        "tahun",
+        "gini_ratio",
+        "tingkat_penganggur_terbuka",
+        "rata_rata_inflasi_tahunan",
+        "indeks_pembangunan_manusia"
+    ],
+    "priority_thresholds": {
+        "low_threshold": 7.46,
+        "high_threshold": 7.88
+    },
+    "created_at": "2026-05-18 11:58:16"
+}

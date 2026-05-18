@@ -1,0 +1,24 @@
+{
+  "historical": [
+    { "tahun": 2020, "kemiskinan": 8.43, "kategori": "High Priority" },
+    { "tahun": 2021, "kemiskinan": 8.4, "kategori": "High Priority" },
+    { "tahun": 2022, "kemiskinan": 8.06, "kategori": "High Priority" },
+    { "tahun": 2023, "kemiskinan": 7.62, "kategori": "Medium Priority" },
+    { "tahun": 2024, "kemiskinan": 7.46, "kategori": "Low Priority" },
+    { "tahun": 2025, "kemiskinan": 7.55, "kategori": "Medium Priority" },
+    { "tahun": 2026, "kemiskinan": 7.5, "kategori": "Medium Priority" },
+    { "tahun": 2027, "kemiskinan": 7.45, "kategori": "Low Priority" },
+    { "tahun": 2028, "kemiskinan": 7.43, "kategori": "Low Priority" },
+    { "tahun": 2029, "kemiskinan": 7.4, "kategori": "Low Priority" }
+  ],
+  "priority_distribution": [
+    { "priority": "Low Priority", "value": 42 },
+    { "priority": "Medium Priority", "value": 37 },
+    { "priority": "High Priority", "value": 21 }
+  ],
+  "scenario_reference": [
+    { "label": "Baseline", "kemiskinan": 7.4 },
+    { "label": "Skenario Perbaikan", "kemiskinan": 7.05 },
+    { "label": "Skenario Tekanan", "kemiskinan": 7.9 }
+  ]
+}
