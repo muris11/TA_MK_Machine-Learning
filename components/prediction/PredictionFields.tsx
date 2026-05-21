@@ -48,7 +48,7 @@ export function PredictionFields<T extends FieldValues>({
               id={inputId}
               type="number"
               min={field.min}
-              max={field.max}
+              max={"max" in field ? field.max : undefined}
               step={field.step}
               disabled={disabled}
               aria-invalid={Boolean(errorMessage)}

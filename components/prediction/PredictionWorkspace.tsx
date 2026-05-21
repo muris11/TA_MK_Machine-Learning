@@ -2,6 +2,10 @@
 
 import { AlertCircle, BarChart3 } from "lucide-react"
 import { useMemo, useState } from "react"
+import {
+  latestPredictionStorageKey,
+  serializeLatestPredictionInput,
+} from "@/lib/prediction-storage"
 import { buildIndicatorDiagnosis } from "@/lib/recommendation"
 import type { PredictionInput, PredictionResult, TrendData } from "@/lib/types"
 import { PredictionForm } from "@/components/prediction/PredictionForm"
@@ -46,6 +50,14 @@ export function PredictionWorkspace({ trendData }: { trendData: TrendData }) {
 
       setResult(payload as PredictionResult)
       setInput(values)
+      try {
+        window.localStorage.setItem(
+          latestPredictionStorageKey,
+          serializeLatestPredictionInput(values),
+        )
+      } catch {
+        // Prediction remains valid even if browser storage is unavailable.
+      }
     } catch (caughtError) {
       setError(
         caughtError instanceof Error
@@ -99,8 +111,7 @@ export function PredictionWorkspace({ trendData }: { trendData: TrendData }) {
           <div className="mb-3 flex flex-col gap-1">
             <h3 className="text-lg font-semibold text-slate-950">Tren dan titik prediksi</h3>
             <p className="text-sm leading-6 text-slate-600">
-              Grafik menggunakan data static untuk konteks historis dan menandai hasil prediksi
-              terakhir.
+              Grafik mengikuti tahun yang diinput dan menampilkan titik prediksi terakhir.
             </p>
           </div>
           <DynamicPovertyTrendChart

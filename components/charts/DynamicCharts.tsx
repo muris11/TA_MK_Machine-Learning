@@ -7,7 +7,7 @@ export const DynamicPovertyTrendChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[280px] w-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:h-[320px]">
+      <div className="h-[280px] w-full min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:h-[320px]">
         <div className="h-full w-full animate-pulse rounded-xl bg-slate-100" />
       </div>
     ),
@@ -22,7 +22,7 @@ export const DynamicFeatureImportanceChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[320px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="h-[320px] min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="h-full w-full animate-pulse rounded-xl bg-slate-100" />
       </div>
     ),
@@ -37,7 +37,7 @@ export const DynamicPriorityDistributionChart = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-[280px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="h-[280px] min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="h-full w-full animate-pulse rounded-xl bg-slate-100" />
       </div>
     ),

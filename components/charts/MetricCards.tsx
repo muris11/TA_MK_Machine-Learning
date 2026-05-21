@@ -13,7 +13,7 @@ export function MetricCards({ metadata }: { metadata: ModelMetadata }) {
     },
     {
       label: "MAE",
-      value: formatMetric(metadata.metrics.mae),
+      value: formatMetric(metadata.metrics.mae, 4),
       description: "Rata-rata galat absolut model regresi.",
       icon: Activity,
     },

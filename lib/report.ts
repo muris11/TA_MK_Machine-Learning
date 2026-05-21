@@ -68,6 +68,7 @@ Model menggunakan mode static demo berbasis formula simulasi yang meniru perilak
     metadata.created_at,
   )}, dengan R2 Score ${formatMetric(metadata.metrics.r2_score)}, MAE ${formatMetric(
     metadata.metrics.mae,
+    4,
   )}, dan classification accuracy ${formatMetric(metadata.metrics.classification_accuracy)}. Hasil prediksi perlu ditinjau bersama data terbaru dan konteks kebijakan daerah.
 `
 }

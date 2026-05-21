@@ -1,7 +1,9 @@
+import Link from "next/link"
 import { Activity, Gauge, ShieldCheck } from "lucide-react"
 import { formatMetric, formatPercent } from "@/lib/formatters"
 import type { PredictionInput, PredictionResult as PredictionResultType } from "@/lib/types"
 import { Badge } from "@/components/ui/badge"
+import { buttonStyles } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -39,9 +41,14 @@ export function PredictionResult({
               Hasil simulasi untuk tahun {input.tahun} dengan artifact model static.
             </CardDescription>
           </div>
-          <Badge variant={priorityVariant(result.priority_level)}>
-            {result.priority_level}
-          </Badge>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant={priorityVariant(result.priority_level)}>
+              {result.priority_level}
+            </Badge>
+            <Link href="/report" className={buttonStyles({ variant: "outline", size: "sm" })}>
+              Lihat Report
+            </Link>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -76,7 +83,7 @@ export function PredictionResult({
                   MAE
                 </p>
                 <p className="font-mono text-lg font-bold text-slate-950">
-                  {formatMetric(result.metadata.mae)}
+                  {formatMetric(result.metadata.mae, 4)}
                 </p>
               </div>
             </div>

@@ -562,7 +562,7 @@ Response:
 
 | Field | Type | Min | Max | Required |
 |---|---:|---:|---:|---|
-| tahun | number | 2020 | 2035 | Ya |
+| tahun | number | 2020 | Tidak dibatasi | Ya |
 | gini_ratio | number | 0 | 1000 | Ya |
 | tingkat_penganggur_terbuka | number | 0 | 30 | Ya |
 | rata_rata_inflasi_tahunan | number | -5 | 20 | Ya |

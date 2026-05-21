@@ -4,8 +4,7 @@ export const predictionInputSchema = z.object({
   tahun: z
     .number({ invalid_type_error: "Tahun prediksi harus berupa angka." })
     .int("Tahun prediksi harus berupa bilangan bulat.")
-    .min(2020, "Tahun prediksi harus berada pada rentang 2020 sampai 2035.")
-    .max(2035, "Tahun prediksi harus berada pada rentang 2020 sampai 2035."),
+    .min(2020, "Tahun prediksi minimal 2020."),
   gini_ratio: z
     .number({ invalid_type_error: "Gini Ratio harus berupa angka." })
     .min(0, "Gini Ratio harus berada pada rentang 0 sampai 1000.")

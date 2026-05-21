@@ -27,3 +27,7 @@ coverage
 
 # typescript
 *.tsbuildinfo
+
+# python cache
+__pycache__/
+*.pyc

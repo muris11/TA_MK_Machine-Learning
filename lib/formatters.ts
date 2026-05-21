@@ -4,17 +4,15 @@ const idNumberFormatter = new Intl.NumberFormat("id-ID", {
   maximumFractionDigits: 2,
 })
 
-const idMetricFormatter = new Intl.NumberFormat("id-ID", {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-})
-
 export function formatNumber(value: number) {
   return idNumberFormatter.format(value)
 }
 
-export function formatMetric(value: number) {
-  return idMetricFormatter.format(value)
+export function formatMetric(value: number, digits = 2) {
+  return value.toLocaleString("id-ID", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  })
 }
 
 export function formatPercent(value: number, digits = 2) {

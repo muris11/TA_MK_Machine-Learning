@@ -341,7 +341,7 @@ Rentang input:
 
 | Field | Min | Max |
 |---|---:|---:|
-| Tahun prediksi | 2020 | 2035 |
+| Tahun prediksi | 2020 | Tidak dibatasi |
 | Gini Ratio | 0 | 1000 |
 | Tingkat Pengangguran Terbuka | 0 | 30 |
 | Rata-rata Inflasi Tahunan | -5 | 20 |

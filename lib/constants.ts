@@ -36,9 +36,8 @@ export const predictionFieldMetadata = [
   {
     name: "tahun",
     label: "Tahun Prediksi",
-    helper: "Masukkan tahun antara 2020 sampai 2035.",
+    helper: "Masukkan tahun prediksi mulai 2020 tanpa batas maksimum.",
     min: 2020,
-    max: 2035,
     step: 1,
   },
   {

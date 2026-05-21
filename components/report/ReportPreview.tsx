@@ -98,6 +98,46 @@ export function ReportPreview({
           </section>
 
           <section>
+            <h2 className="text-lg font-semibold text-slate-950">Hasil Prediksi</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 text-blue-950">
+                <p className="text-sm font-semibold">Estimasi Kemiskinan</p>
+                <p className="mt-2 font-mono text-2xl font-bold">
+                  {formatPercent(result.prediksi_kemiskinan)}
+                </p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-950">Status</p>
+                <p className="mt-2 text-sm font-semibold text-slate-700">{result.status}</p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-950">Model</p>
+                <p className="mt-2 text-sm font-semibold text-slate-700">
+                  {result.metadata.model}
+                </p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <p className="text-sm font-semibold text-slate-950">R2 Score</p>
+                <p className="mt-2 font-mono text-xl font-bold text-slate-800">
+                  {formatMetric(result.metadata.r2_score)}
+                </p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <p className="text-sm font-semibold text-slate-950">MAE</p>
+                <p className="mt-2 font-mono text-xl font-bold text-slate-800">
+                  {formatMetric(result.metadata.mae, 4)}
+                </p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-4">
+                <p className="text-sm font-semibold text-slate-950">Accuracy</p>
+                <p className="mt-2 font-mono text-xl font-bold text-slate-800">
+                  {formatMetric(result.metadata.classification_accuracy)}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section>
             <h2 className="text-lg font-semibold text-slate-950">Rekomendasi Kebijakan</h2>
             <p className="mt-3 rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm leading-7 text-blue-900">
               {result.rekomendasi_utama}
