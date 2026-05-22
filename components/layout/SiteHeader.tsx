@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart3, Menu, X } from "lucide-react"
+import { BarChart3, LogIn, Menu, X } from "lucide-react"
 import { useState } from "react"
 import { navigationItems, siteConfig } from "@/lib/constants"
 import { cn } from "@/lib/utils"
@@ -52,7 +52,11 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-2 lg:flex">
+          <Link href="/admin/login" className={buttonStyles({ variant: "outline", size: "sm" })}>
+            <LogIn className="h-4 w-4" aria-hidden="true" />
+            Login
+          </Link>
           <Link href="/dashboard" className={buttonStyles({ size: "sm" })}>
             Mulai Prediksi
           </Link>
@@ -100,14 +104,22 @@ export function SiteHeader() {
                     "rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100",
                     isActive(pathname, item.href) && "bg-blue-50 text-blue-900",
                   )}
-                >
-                  {item.label}
-                </Link>
+                  >
+                    {item.label}
+                  </Link>
               ))}
+              <Link
+                href="/admin/login"
+                onClick={() => setIsOpen(false)}
+                className={buttonStyles({ variant: "outline", className: "mt-4 w-full" })}
+              >
+                <LogIn className="h-4 w-4" aria-hidden="true" />
+                Login
+              </Link>
               <Link
                 href="/dashboard"
                 onClick={() => setIsOpen(false)}
-                className={buttonStyles({ className: "mt-4 w-full" })}
+                className={buttonStyles({ className: "w-full" })}
               >
                 Mulai Prediksi
               </Link>
