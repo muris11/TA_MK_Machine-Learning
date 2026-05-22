@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
-import { createClient } from "@/utils/supabase/server"
+import type { NextRequest } from "next/server"
+import { createRouteClient } from "@/utils/supabase/route"
 
-export async function POST() {
-  const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
+export const runtime = "nodejs"
+
+export async function POST(request: NextRequest) {
+  const { supabase, applyCookies } = createRouteClient(request)
 
   await supabase.auth.signOut()
 
-  return NextResponse.json({ ok: true })
+  return applyCookies(NextResponse.json({ ok: true }))
 }

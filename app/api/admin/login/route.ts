@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 import { z } from "zod"
-import { cookies } from "next/headers"
-import { createClient } from "@/utils/supabase/server"
+import { createRouteClient } from "@/utils/supabase/route"
+
+export const runtime = "nodejs"
 
 const loginSchema = z.object({
   email: z.string().email("Email tidak valid."),
@@ -17,7 +19,7 @@ function sanitizeRedirect(value?: string | null) {
   return value
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const payload = loginSchema.safeParse(await request.json())
 
@@ -28,17 +30,19 @@ export async function POST(request: Request) {
       )
     }
 
-    const cookieStore = await cookies()
-    const supabase = createClient(cookieStore)
+    const { supabase, applyCookies } = createRouteClient(request)
     const { data, error } = await supabase.auth.signInWithPassword({
       email: payload.data.email,
       password: payload.data.password,
     })
 
-    if (error || !data.user) {
-      return NextResponse.json(
-        { error: "Email atau password tidak valid." },
-        { status: 401 },
+    if (error || !data.user || !data.session) {
+      console.error("Supabase admin login failed:", error?.message ?? "No session returned")
+      return applyCookies(
+        NextResponse.json(
+          { error: "Email atau password tidak valid, atau email belum dikonfirmasi." },
+          { status: 401 },
+        ),
       )
     }
 
@@ -50,14 +54,29 @@ export async function POST(request: Request) {
 
     if (adminError || !adminUser) {
       await supabase.auth.signOut()
-      return NextResponse.json(
-        { error: "Akun Supabase ini belum diberi akses admin." },
-        { status: 403 },
+      console.error("Supabase admin access check failed:", adminError?.message ?? "User is not in admin_users")
+      return applyCookies(
+        NextResponse.json(
+          {
+            error:
+              "Login Supabase berhasil, tetapi akun ini belum ada di tabel public.admin_users.",
+          },
+          { status: 403 },
+        ),
       )
     }
 
-    return NextResponse.json({ next: sanitizeRedirect(payload.data.next) })
-  } catch {
-    return NextResponse.json({ error: "Login belum dapat diproses." }, { status: 400 })
+    return applyCookies(NextResponse.json({ next: sanitizeRedirect(payload.data.next) }))
+  } catch (error) {
+    console.error("Admin login route failed:", error)
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Login belum dapat diproses.",
+      },
+      { status: 400 },
+    )
   }
 }
