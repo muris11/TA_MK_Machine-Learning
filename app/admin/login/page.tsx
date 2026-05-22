@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Halaman login admin untuk pengelolaan dataset CSV.",
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminLoginPage() {
   const session = await getAdminSession()
 

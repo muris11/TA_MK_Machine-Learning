@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Dashboard admin untuk upload dan validasi dataset CSV.",
 }
 
+export const dynamic = "force-dynamic"
+
 export default async function AdminPage() {
   const session = await getAdminSession()
 
@@ -17,7 +19,10 @@ export default async function AdminPage() {
     redirect("/admin/login?next=/admin")
   }
 
-  const uploads = await listCsvUploads()
+  const uploads = await listCsvUploads().catch((error) => {
+    console.error("Admin CSV uploads could not be loaded:", error)
+    return []
+  })
 
   return (
     <PageShell>
