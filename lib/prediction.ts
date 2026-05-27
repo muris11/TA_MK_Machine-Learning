@@ -4,17 +4,13 @@ import type { PredictionInput, PredictionResult } from "@/lib/types"
 import { roundTo } from "@/lib/utils"
 
 export function simulatePrediction(input: PredictionInput): number {
-  const base = 7.5
+  const inflasiImpact = (input.rata_rata_inflasi_tahunan - 2.5) * 1.6
+  const giniImpact = (input.gini_ratio / 1000 - 0.4) * 2
+  const unemploymentImpact = (input.tingkat_penganggur_terbuka - 7) * 0.05
   const ipmImpact = (73 - input.indeks_pembangunan_manusia) * 0.02
-  const unemploymentImpact = (input.tingkat_penganggur_terbuka - 8) * 0.05
-  const giniImpact = (input.gini_ratio - 411) * 0.002
-  const inflationImpact = (input.rata_rata_inflasi_tahunan - 3) * 0.3
 
   return roundTo(
-    Math.max(
-      0,
-      base + ipmImpact + unemploymentImpact + giniImpact + inflationImpact,
-    ),
+    Math.max(0, 7 + inflasiImpact + giniImpact + unemploymentImpact + ipmImpact),
   )
 }
 
