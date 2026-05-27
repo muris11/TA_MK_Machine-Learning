@@ -1,24 +1,21 @@
 {
   "historical": [
-    { "tahun": 2020, "kemiskinan": 8.43, "kategori": "High Priority" },
-    { "tahun": 2021, "kemiskinan": 8.4, "kategori": "High Priority" },
-    { "tahun": 2022, "kemiskinan": 8.06, "kategori": "High Priority" },
-    { "tahun": 2023, "kemiskinan": 7.62, "kategori": "Medium Priority" },
-    { "tahun": 2024, "kemiskinan": 7.46, "kategori": "Low Priority" },
-    { "tahun": 2025, "kemiskinan": 7.55, "kategori": "Medium Priority" },
-    { "tahun": 2026, "kemiskinan": 7.5, "kategori": "Medium Priority" },
-    { "tahun": 2027, "kemiskinan": 7.45, "kategori": "Low Priority" },
-    { "tahun": 2028, "kemiskinan": 7.43, "kategori": "Low Priority" },
-    { "tahun": 2029, "kemiskinan": 7.4, "kategori": "Low Priority" }
+    { "tahun": 2018, "kemiskinan": 7.45, "kategori": "Low Priority", "rata_rata_gini": 0.406, "rata_rata_tpt": 8.105, "rata_rata_ipm": 71.267 },
+    { "tahun": 2019, "kemiskinan": 6.91, "kategori": "Low Priority", "rata_rata_gini": 0.4, "rata_rata_tpt": 7.935, "rata_rata_ipm": 71.917 },
+    { "tahun": 2020, "kemiskinan": 7.88, "kategori": "Medium Priority", "rata_rata_gini": 0.401, "rata_rata_tpt": 9.77, "rata_rata_ipm": 71.914 },
+    { "tahun": 2021, "kemiskinan": 8.04, "kategori": "High Priority", "rata_rata_gini": 0.409, "rata_rata_tpt": 8.795, "rata_rata_ipm": 72.235 },
+    { "tahun": 2022, "kemiskinan": 8.06, "kategori": "High Priority", "rata_rata_gini": 0.415, "rata_rata_tpt": 7.545, "rata_rata_ipm": 72.895 },
+    { "tahun": 2023, "kemiskinan": 7.62, "kategori": "Medium Priority", "rata_rata_gini": 0.425, "rata_rata_tpt": 6.785, "rata_rata_ipm": 73.554 },
+    { "tahun": 2024, "kemiskinan": 7.46, "kategori": "Low Priority", "rata_rata_gini": 0.424, "rata_rata_tpt": 6.413, "rata_rata_ipm": 74.157 }
   ],
   "priority_distribution": [
-    { "priority": "Low Priority", "value": 42 },
-    { "priority": "Medium Priority", "value": 37 },
-    { "priority": "High Priority", "value": 21 }
+    { "priority": "Low Priority", "count": 647, "percentage": 42.9, "value": 42.9 },
+    { "priority": "Medium Priority", "count": 428, "percentage": 28.4, "value": 28.4 },
+    { "priority": "High Priority", "count": 432, "percentage": 28.7, "value": 28.7 }
   ],
   "scenario_reference": [
-    { "label": "Baseline", "kemiskinan": 7.4 },
+    { "label": "Baseline", "kemiskinan": 7.5 },
     { "label": "Skenario Perbaikan", "kemiskinan": 7.05 },
-    { "label": "Skenario Tekanan", "kemiskinan": 7.9 }
+    { "label": "Skenario Tekanan", "kemiskinan": 8.1 }
   ]
 }

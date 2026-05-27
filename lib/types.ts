@@ -28,6 +28,16 @@ export type PredictionResult = {
   }
 }
 
+export type ModelMetrics = {
+  r2_score: number
+  mae: number
+  rmse: number
+  classification_accuracy: number
+  precision_weighted?: number
+  recall_weighted?: number
+  f1_weighted?: number
+}
+
 export type ModelMetadata = {
   project_title: string
   model_type: string
@@ -39,17 +49,27 @@ export type ModelMetadata = {
     regression: string
     classification: string
   }
-  metrics: {
-    r2_score: number
-    mae: number
-    classification_accuracy: number
-  }
+  metrics: ModelMetrics
   feature_columns: string[]
   priority_thresholds: {
     low_threshold: number
     high_threshold: number
   }
+  dataset_summary: {
+    raw_rows: number
+    clean_rows: number
+    modeling_rows_after_dedup: number
+    test_rows: number
+    latest_year: number
+  }
+  preprocessing_improvement: string[]
+  limitations: string[]
   created_at: string
+  uas_notes: {
+    status: string
+    smart_city_pillar: string
+    application: string
+  }
 }
 
 export type RecommendationRule = {
@@ -100,6 +120,8 @@ export type TrendPoint = {
 
 export type PriorityDistribution = {
   priority: PriorityLevel
+  count: number
+  percentage: number
   value: number
 }
 

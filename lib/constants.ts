@@ -17,18 +17,18 @@ export const navigationItems = [
 ]
 
 export const defaultPredictionInput: PredictionInput = {
-  tahun: 2029,
-  gini_ratio: 400,
-  tingkat_penganggur_terbuka: 5,
-  rata_rata_inflasi_tahunan: 0.15,
-  indeks_pembangunan_manusia: 73.5,
+  tahun: 2025,
+  gini_ratio: 411,
+  tingkat_penganggur_terbuka: 6.5,
+  rata_rata_inflasi_tahunan: 3,
+  indeks_pembangunan_manusia: 73,
 }
 
 export const defaultScenarioInput: PredictionInput = {
-  tahun: 2029,
-  gini_ratio: 370,
-  tingkat_penganggur_terbuka: 4.2,
-  rata_rata_inflasi_tahunan: 0.1,
+  tahun: 2025,
+  gini_ratio: 380,
+  tingkat_penganggur_terbuka: 5.5,
+  rata_rata_inflasi_tahunan: 2,
   indeks_pembangunan_manusia: 75,
 }
 
