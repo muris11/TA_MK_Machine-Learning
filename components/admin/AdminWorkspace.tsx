@@ -10,7 +10,7 @@ import {
   LogOut,
   Upload,
 } from "lucide-react"
-import type { UploadedCsvRecord } from "@/lib/admin-csv"
+import type { CsvColumnInfo, UploadedCsvRecord } from "@/lib/admin-csv"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -26,7 +26,7 @@ import { Separator } from "@/components/ui/separator"
 
 type AdminWorkspaceProps = {
   initialUploads: UploadedCsvRecord[]
-  requiredColumns: string[]
+  requiredColumns: CsvColumnInfo[]
   adminEmail: string
 }
 
@@ -65,7 +65,7 @@ export function AdminWorkspace({
 
   const latestUpload = uploads[0]
   const previewColumns = useMemo(
-    () => latestUpload?.columns.slice(0, 6) ?? requiredColumns.slice(0, 6),
+    () => latestUpload?.columns.slice(0, 6) ?? requiredColumns.map((c) => c.name).slice(0, 6),
     [latestUpload, requiredColumns],
   )
 
@@ -234,11 +234,17 @@ export function AdminWorkspace({
               <p className="text-sm font-semibold text-slate-950">Kolom yang diterima</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {requiredColumns.map((column) => (
-                  <Badge key={column} variant="outline" className="font-mono">
-                    {column}
+                  <Badge key={column.name} variant="outline" className="font-mono">
+                    {column.name}
+                    {column.aliases.length > 1
+                      ? ` (${column.aliases.filter((a) => a !== column.name).join("/")})`
+                      : null}
                   </Badge>
                 ))}
               </div>
+              <p className="mt-3 text-xs leading-5 text-slate-500">
+                priority_level dihitung otomatis dari persentase_kemiskinan.
+              </p>
             </div>
           </CardContent>
         </Card>

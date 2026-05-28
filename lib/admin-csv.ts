@@ -20,6 +20,11 @@ export type UploadedCsvRecord = {
 
 export const maxCsvSizeBytes = 5 * 1024 * 1024
 
+const columnAliases: Record<string, string[]> = {
+  wilayah: ["wilayah", "nama_kabupaten_kota"],
+  persentase_kemiskinan: ["persentase_kemiskinan", "persentase_penduduk_miskin"],
+}
+
 const requiredColumns = [
   "wilayah",
   "tahun",
@@ -28,10 +33,25 @@ const requiredColumns = [
   "rata_rata_inflasi_tahunan",
   "indeks_pembangunan_manusia",
   "persentase_kemiskinan",
-  "priority_level",
 ]
 
+const priorityThresholds = { low: 7.46, high: 7.88 }
+
 const allowedPriorityLevels = new Set(["Low Priority", "Medium Priority", "High Priority"])
+
+function computePriorityLevel(persentaseKemiskinan: number) {
+  if (persentaseKemiskinan <= priorityThresholds.low) return "Low Priority"
+  if (persentaseKemiskinan <= priorityThresholds.high) return "Medium Priority"
+  return "High Priority"
+}
+
+function resolveColumn(normalizedColumns: string[], aliases: string[]) {
+  for (const alias of aliases) {
+    const index = normalizedColumns.indexOf(alias)
+    if (index !== -1) return { name: alias, index }
+  }
+  return null
+}
 
 type CsvRowData = Record<string, string>
 
@@ -256,10 +276,24 @@ export async function ingestCsvUpload({
   }
 
   const normalizedColumns = columns.map((column) => column.trim())
-  const missingColumns = requiredColumns.filter((column) => !normalizedColumns.includes(column))
+  const missingColumns = requiredColumns.filter((column) => {
+    const aliases = columnAliases[column]
+    return aliases ? !resolveColumn(normalizedColumns, aliases) : !normalizedColumns.includes(column)
+  })
 
   if (missingColumns.length > 0) {
     throw new Error(`Kolom wajib belum lengkap: ${missingColumns.join(", ")}.`)
+  }
+
+  const colName: Record<string, string> = {}
+  for (const canonical of requiredColumns) {
+    const aliases = columnAliases[canonical]
+    if (aliases) {
+      const resolved = resolveColumn(normalizedColumns, aliases)
+      if (resolved) colName[canonical] = resolved.name
+    } else {
+      colName[canonical] = canonical
+    }
   }
 
   const storedName = `${new Date().toISOString().replace(/[:.]/g, "-")}-${randomUUID()}-${sanitizeFileName(
@@ -277,10 +311,17 @@ export async function ingestCsvUpload({
   const rowPayloads: CsvRowInsert[] = parsedRows.map((rawData, index) => {
     const rowNumber = index + 2
 
+    const parsedPersentaseKemiskinan = parseRequiredNumber(
+      rawData,
+      colName.persentase_kemiskinan!,
+      "persentase_kemiskinan",
+      rowNumber,
+    )
+
     return {
       upload_id: uploadId,
       row_number: rowNumber - 1,
-      wilayah: parseRequiredText(rawData, "wilayah", "wilayah", rowNumber),
+      wilayah: parseRequiredText(rawData, colName.wilayah!, "wilayah", rowNumber),
       tahun: parseRequiredNumber(rawData, "tahun", "tahun", rowNumber, { integer: true }),
       gini_ratio: parseRequiredNumber(rawData, "gini_ratio", "gini_ratio", rowNumber),
       tingkat_penganggur_terbuka: parseRequiredNumber(
@@ -301,16 +342,8 @@ export async function ingestCsvUpload({
         "indeks_pembangunan_manusia",
         rowNumber,
       ),
-      persentase_kemiskinan: parseRequiredNumber(
-        rawData,
-        "persentase_kemiskinan",
-        "persentase_kemiskinan",
-        rowNumber,
-      ),
-      priority_level: parsePriorityLevel(
-        parseRequiredText(rawData, "priority_level", "priority_level", rowNumber),
-        rowNumber,
-      ),
+      persentase_kemiskinan: parsedPersentaseKemiskinan,
+      priority_level: computePriorityLevel(parsedPersentaseKemiskinan),
       raw_data: rawData as Json,
     }
   })
@@ -351,6 +384,21 @@ export async function ingestCsvUpload({
   }
 }
 
+export type CsvColumnInfo = {
+  name: string
+  aliases: string[]
+}
+
 export function getRequiredCsvColumns() {
-  return [...requiredColumns]
+  return requiredColumns.map((col) => ({
+    name: col,
+    aliases: columnAliases[col] ?? [],
+  }))
+}
+
+export function getCsvColumnHelp() {
+  return `Kolom yang diterima: ${requiredColumns.join(", ")}. ${Object.entries(columnAliases)
+    .filter(([, aliases]) => aliases.length > 1)
+    .map(([canonical, aliases]) => `"${canonical}" bisa ditulis sebagai ${aliases.map((a) => `"${a}"`).join(" atau ")}`)
+    .join(". ")}. Kolom "priority_level" akan dihitung otomatis dari persentase_kemiskinan.`
 }
