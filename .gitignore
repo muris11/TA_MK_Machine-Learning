@@ -24,6 +24,10 @@ coverage
 
 # vercel
 .vercel
+.env.vercel
+
+# generated datasets
+*.csv
 
 # typescript
 *.tsbuildinfo
