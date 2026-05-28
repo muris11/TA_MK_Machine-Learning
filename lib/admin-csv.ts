@@ -119,6 +119,16 @@ function parseCsv(text: string) {
   return rows.filter((row) => row.some((cell) => cell.length > 0))
 }
 
+function convertDateStringToNumber(rawValue: string): number | null {
+  const dateMatch = rawValue.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)
+  if (dateMatch && dateMatch[2] && dateMatch[3]) {
+    const day = Number.parseInt(dateMatch[3], 10)
+    const month = Number.parseInt(dateMatch[2], 10)
+    return day + month / 100
+  }
+  return null
+}
+
 function parseRequiredNumber(
   row: CsvRowData,
   key: keyof CsvRowData,
@@ -132,8 +142,19 @@ function parseRequiredNumber(
     throw new Error(`Baris ${rowNumber}: kolom ${label} wajib diisi.`)
   }
 
-  const normalizedValue = rawValue.replace(",", ".")
-  let numericValue = Number(normalizedValue)
+  let numericValue: number
+
+  const cleaned = rawValue.replace(",", ".")
+  const dateValue = convertDateStringToNumber(cleaned)
+  if (dateValue !== null) {
+    numericValue = dateValue
+  } else {
+    const stripped = cleaned.replace(/[^0-9.eE+\-]/g, "")
+    if (stripped.length === 0) {
+      throw new Error(`Baris ${rowNumber}: kolom ${label} harus berupa angka.`)
+    }
+    numericValue = Number(stripped)
+  }
 
   if (!Number.isFinite(numericValue)) {
     throw new Error(`Baris ${rowNumber}: kolom ${label} harus berupa angka.`)
