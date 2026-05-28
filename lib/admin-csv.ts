@@ -124,7 +124,7 @@ function parseRequiredNumber(
   key: keyof CsvRowData,
   label: string,
   rowNumber: number,
-  { integer = false }: { integer?: boolean } = {},
+  { integer = false, smartScale = false }: { integer?: boolean; smartScale?: boolean } = {},
 ) {
   const rawValue = row[key]?.trim()
 
@@ -133,10 +133,14 @@ function parseRequiredNumber(
   }
 
   const normalizedValue = rawValue.replace(",", ".")
-  const numericValue = Number(normalizedValue)
+  let numericValue = Number(normalizedValue)
 
   if (!Number.isFinite(numericValue)) {
     throw new Error(`Baris ${rowNumber}: kolom ${label} harus berupa angka.`)
+  }
+
+  if (smartScale && Math.abs(numericValue) > 1000) {
+    while (Math.abs(numericValue) > 20) numericValue /= 10
   }
 
   if (integer && !Number.isInteger(numericValue)) {
@@ -316,25 +320,33 @@ export async function ingestCsvUpload({
       colName.persentase_kemiskinan!,
       "persentase_kemiskinan",
       rowNumber,
+      { smartScale: true },
     )
+
+    let parsedGini = parseRequiredNumber(rawData, "gini_ratio", "gini_ratio", rowNumber, {
+      smartScale: true,
+    })
+    if (parsedGini > 1) parsedGini /= 1000
 
     return {
       upload_id: uploadId,
       row_number: rowNumber - 1,
       wilayah: parseRequiredText(rawData, colName.wilayah!, "wilayah", rowNumber),
       tahun: parseRequiredNumber(rawData, "tahun", "tahun", rowNumber, { integer: true }),
-      gini_ratio: parseRequiredNumber(rawData, "gini_ratio", "gini_ratio", rowNumber),
+      gini_ratio: parsedGini,
       tingkat_penganggur_terbuka: parseRequiredNumber(
         rawData,
         "tingkat_penganggur_terbuka",
         "tingkat_penganggur_terbuka",
         rowNumber,
+        { smartScale: true },
       ),
       rata_rata_inflasi_tahunan: parseRequiredNumber(
         rawData,
         "rata_rata_inflasi_tahunan",
         "rata_rata_inflasi_tahunan",
         rowNumber,
+        { smartScale: true },
       ),
       indeks_pembangunan_manusia: parseRequiredNumber(
         rawData,
